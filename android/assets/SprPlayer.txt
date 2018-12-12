@@ -1,0 +1,62 @@
+
+SprPlayer.png
+size: 372, 304
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Runningframe1
+  rotate: false
+  xy: 0, 0
+  size: 93, 152
+  orig: 93, 152
+  offset: 0, 0
+  index: -1
+Runningframe2
+  rotate: false
+  xy: 93, 0
+  size: 93, 152
+  orig: 93, 152
+  offset: 0, 0
+  index: -1
+Runningframe3
+  rotate: false
+  xy: 186, 0
+  size: 93, 152
+  orig: 93, 152
+  offset: 0, 0
+  index: -1
+Runningframe4
+  rotate: false
+  xy: 279, 0
+  size: 93, 152
+  orig: 93, 152
+  offset: 0, 0
+  index: -1
+RunningLeftFrame1
+  rotate: false
+  xy: 0, 152
+  size: 93, 152
+  orig: 93, 152
+  offset: 0, 0
+  index: -1
+RunningLeftFrame2
+  rotate: false
+  xy: 93, 152
+  size: 93, 152
+  orig: 93, 152
+  offset: 0, 0
+  index: -1
+RunningLeftFrame3
+  rotate: false
+  xy: 186, 152
+  size: 93, 152
+  orig: 93, 152
+  offset: 0, 0
+  index: -1
+RunningLeftFrame4
+  rotate: false
+  xy: 279, 152
+  size: 93, 152
+  orig: 93, 152
+  offset: 0, 0
+  index: -1
