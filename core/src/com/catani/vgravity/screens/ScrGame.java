@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -21,7 +20,6 @@ import com.catani.vgravity.SprCollectables;
 import com.catani.vgravity.obstacles.ObsTree;
 import com.catani.vgravity.obstacles.SprObstacle;
 import com.catani.vgravity.GamVGravity;
-import com.sun.org.apache.bcel.internal.classfile.Constant;
 
 public class ScrGame implements Screen, InputProcessor {
     GamVGravity game;
@@ -77,12 +75,8 @@ public class ScrGame implements Screen, InputProcessor {
     public void show() {
         Gdx.input.setInputProcessor(this);
         nScore = 0;
-//        for (SprObstacle obstacle :
-//                obstacles) {
-//            obstacle.reset();
-//        }
+
         resetObstacles();
-        //obstacles.clear();
 
         fGameSpeed = 10;
         sbg.setSrcollSpeed(fGameSpeed);
@@ -134,41 +128,13 @@ public class ScrGame implements Screen, InputProcessor {
 
             }
         }
-
         sprCoin.render(game.batch);
         sprCoin.setXVel(fGameSpeed * -1);
         redrawCoin();
-
         game.chrMain.render(game.batch);
         game.chrMain.constrain();
-
         text();
-
         game.batch.end();
-
-
-        //everything past this point is bug testing stuff
-//        System.out.println(game.chrMain.getY());
-//        System.out.println("HTSRT " + game.chrMain.getYVel());
-        System.out.println("SCROLL SPEED " + fGameSpeed);
-        sr.begin(ShapeRenderer.ShapeType.Line);
-        sr.setProjectionMatrix(game.camera.combined);
-//        sr.setColor(Color.RED);
-//        sr.rect(obsPitfall.hitbox.getX(), obsPitfall.hitbox.getY(), obsPitfall.hitbox.getWidth(), obsPitfall.hitbox.getHeight());
-
-//        sr.setColor(Color.GOLD);
-//        sr.rect(game.chrMain.getX(), game.chrMain.getY(), game.chrMain.getWidth(), game.chrMain.getHeight());
-//        sr.setColor(Color.RED);
-//        sr.rect(obsTree.hitbox.getX(), obsTree.hitbox.getY(), obsTree.hitbox.getWidth(), obsTree.hitbox.getHeight());
-      //  sr.polygon(obsTree.);
-        sr.polygon(obsSpinning.getHitbox().getTransformedVertices());
-//        sr.setColor(Color.BLACK);
-//        sr.line(0, FLOOR, 1920, FLOOR);
-//        sr.setColor(Color.BLACK);
-//        sr.line(0, CEILING, 1920, CEILING);
-        sr.end();
-//        System.out.println("HITSSS " + obsTree.isFlipY());
-        System.out.println(obstacles);
     }
 
     public void redrawObstacles(SprObstacle obstacle) {
