@@ -1,3 +1,6 @@
+/*TODO  Update July 7 2019: obstacles work perfectly on first game run, when run a seocnd time pitfalll has incorrect texture and obstacles have velocity bugs as well as too many on screen
+TODO Bug fix: Obstacles sometimes spawn with x velocity multiplied much higher than should be
+ */
 package com.catani.vgravity.screens;
 
 import com.badlogic.gdx.Gdx;
@@ -5,7 +8,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
@@ -30,18 +32,20 @@ public class ScrGame implements Screen, InputProcessor {
     ObsFlying obsFlying;
     ObsSpinning obsSpinning;
     ObsPitfall obsPitfall;
-    ObsTree obsTree;
+    ObsTree obsTree, baseTree; //base forms of obstacles with unchanged variables are created
+    SprObstacle tempObs;
 
     SprCollectables sprCoin;
 
     Array<SprObstacle> obstacles;
+    Array<SprObstacle> possibleObstacles;
     ScrollingBackground sbg;
     Music musElectro;
 
     int nScore, ncoinCounter = 0;
     private int nObsAvoided;
     float fGameSpeed, fPixelsRan;
-    int nObstacle;
+    int nObstacle, requiredObstacles;
 
     public ScrGame(GamVGravity _game) {
 
@@ -56,7 +60,7 @@ public class ScrGame implements Screen, InputProcessor {
         obsSpinning = new ObsSpinning("Axe.png", -13, 1);
         obsTree = new ObsTree("Tree.png", -10);
         obstacles = new Array<SprObstacle>(new SprObstacle[]{obsPitfall});
-
+        possibleObstacles = new Array<SprObstacle>(new SprObstacle[]{obsPitfall,obsTree,obsShip,obsSpinning,obsFlying});
         resize(1920, 1080);
 
         sprCoin = new SprCollectables("coin.png", -10);
@@ -68,6 +72,7 @@ public class ScrGame implements Screen, InputProcessor {
         nScore = 0;
         nObsAvoided = 0;
         fGameSpeed = 10;
+        requiredObstacles = 1;
     }
 
 
@@ -89,10 +94,11 @@ public class ScrGame implements Screen, InputProcessor {
 
     public void resetObstacles() {
         obstacles.clear();
+        requiredObstacles = 1;
         obstacles.add(obsPitfall);
         obsPitfall.setX(Constants.WORLDWIDTH + obsPitfall.getWidth());
-        obsPitfall.setTexture(game.assets.manager.get("floorhole.png", Texture.class));
-        obsPitfall.isPitfallFlipped = false;
+        //obsPitfall.setTexture(game.assets.manager.get("floorhole.png", Texture.class));
+        //obsPitfall.isPitfallFlipped = false;          this line might cause wrong texture to be dsiplayed
         obsTree.isTreeFlipped = false;
     }
 
@@ -110,34 +116,57 @@ public class ScrGame implements Screen, InputProcessor {
 
         fPixelsRan += fGameSpeed;
         nScore = (int) ((fPixelsRan / Constants.WORLDWIDTH) * 3); //convert pixels ran to score units
-        if (nScore > 2) {
-            for (SprObstacle obstacle : obstacles) {
-                obstacle.render(game.batch);
-                obstacle.setXVel(fGameSpeed * -1);
+        for (SprObstacle obstacle : obstacles) {
+            obstacle.render(game.batch);        //this obstacle code is good
+              //will work for many obstacles at once
+            obstacle.setXVel(obstacle.getBaseXVel()-fGameSpeed);
 
-
-                if (obstacle.getX() < -300) {
-                    redrawObstacles(obstacle);
+            if (obstacle.getX() < -300) {
+                obstacles.removeValue(obstacle, true);
+                nObsAvoided++;
+                if (nObsAvoided % 1 == 0 && nObsAvoided != 0 && fGameSpeed < 32) {
+                    fGameSpeed += 0.2;
+                    //sbg.setSrcollSpeed(fGameSpeed);   //might need this line but it currently causes a flash on the seam of the two backgrounds
                 }
-
-                if (obstacle.isHit(game.chrMain.getBoundingRectangle())) {
-                    deathAnimations(obstacle);
-                }
-
-                System.out.println(obstacle);
-
+                updateObstacles();
             }
+
+            if (obstacle.isHit(game.chrMain.getBoundingRectangle())) {
+                deathAnimations(obstacle);
+            }
+
+            System.out.println(obstacle);
+
         }
         sprCoin.render(game.batch);
         sprCoin.setXVel(fGameSpeed * -1);
         redrawCoin();
         game.chrMain.render(game.batch);
         game.chrMain.constrain();
-        text();
+        drawText();
         game.batch.end();
     }
-
-    public void redrawObstacles(SprObstacle obstacle) {
+    private void updateObstacles(){
+        if(nScore < 25){
+            requiredObstacles = 1;
+        }
+        if(nScore >= 25 && nScore < 50){
+            requiredObstacles = 2;
+        }
+        else if (nScore >=50 && nScore < 75){
+            requiredObstacles = 3;
+        }
+        while(obstacles.size < requiredObstacles){
+            tempObs = possibleObstacles.get(MathUtils.random(possibleObstacles.size-1));     //adds random possible obstacle
+            tempObs.reDraw();
+            obstacles.add(tempObs);
+        }
+    }
+    public void populateObstacles(SprObstacle obstacle) {
+        /*  METHOD DESCRIPTION: this method clear the arraylist once an obstacle is off the left side of the screen
+            it only repopulates the array with one 1 random obstacles
+            TODO: modify this method or create a new one which continiously poulates the array with obstacles with increasing difficulty relative to the score
+        */
 
         obstacles.clear();
 
@@ -168,8 +197,6 @@ public class ScrGame implements Screen, InputProcessor {
             obstacles.add(obsFlying);
             obsFlying.reDraw();
         }
-
-
 
 
         nObsAvoided++;
@@ -206,7 +233,7 @@ public class ScrGame implements Screen, InputProcessor {
         }
     }
 
-    private void text() {
+    private void drawText() {
         game.drawText(Assets.Fonts.SCORE, Integer.toString(nScore) + "m", 0, 1065);
 
         if (ncoinCounter < 10) {

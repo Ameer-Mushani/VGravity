@@ -14,10 +14,12 @@ import com.catani.vgravity.Constants;
 
 public class SprObstacle extends Sprite {
     Vector2 vVel;
+    float baseXVelocity;
 
     public SprObstacle(String path, float xVel) {
         super(new Texture(path));
         vVel = new Vector2(xVel, 0);
+        baseXVelocity = vVel.x;
         setPosition(0, 0);
         // setFlip(true,false);
     }
@@ -28,6 +30,7 @@ public class SprObstacle extends Sprite {
     }
 
     public void reDraw(){
+        setXVel(baseXVelocity);
         setX(Constants.WORLDWIDTH + getWidth());
         setY(MathUtils.random(Constants.FLOOR, Constants.CEILING - getHeight()));
         //setX(-300);
@@ -45,6 +48,7 @@ public class SprObstacle extends Sprite {
     public void setXVel(float xVel){
         vVel.x = xVel;
     }
+    public float getBaseXVel(){ return baseXVelocity;}
     public void reset(){
         setPosition(-10,0);
     }
