@@ -58,6 +58,8 @@ public class Assets {
         createtext(ScoreParams, "pixeldown.ttf", 150, Color.WHITE, "score.ttf");
         FreetypeFontLoader.FreeTypeFontLoaderParameter gameoverParams = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         createtext(gameoverParams,"pixeldown.ttf", 250, Color.BLACK, "gameover.ttf");
+        FreetypeFontLoader.FreeTypeFontLoaderParameter gameoversmallParams = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        createtext(gameoversmallParams,"pixeldown.ttf", 150, Color.BLACK, "gameoversmall.ttf");
     }
 
     private void createtext(FreetypeFontLoader.FreeTypeFontLoaderParameter parameters, String filename, int nSize, Color color, String textname) {
@@ -68,6 +70,7 @@ public class Assets {
     }
     public enum Fonts{
         SCORE,
-        GAMEOVER
+        GAMEOVER,
+        GAMEOVERSMALL
     }
 }

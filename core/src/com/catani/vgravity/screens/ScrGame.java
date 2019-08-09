@@ -91,8 +91,8 @@ public class ScrGame implements Screen, InputProcessor {
         obstacles.clear();
         obstacles.add(obsPitfall);
         obsPitfall.setX(Constants.WORLDWIDTH + obsPitfall.getWidth());
-        obsPitfall.setTexture(game.assets.manager.get("floorhole.png", Texture.class));
-        obsPitfall.isPitfallFlipped = false;
+        //obsPitfall.setTexture(game.assets.manager.get("floorhole.png", Texture.class));
+        //obsPitfall.isPitfallFlipped = false;
         obsTree.isTreeFlipped = false;
     }
 
@@ -185,10 +185,12 @@ public class ScrGame implements Screen, InputProcessor {
         if (obstacle == obsPitfall) {
             obsPitfall.deathAnimation(game.chrMain);
             if (game.chrMain.getY() + game.chrMain.getHeight() <= 10 || game.chrMain.getY() >= Constants.CEILING) {
-                game.changeScreen(Screens.SCRGAMEOVER);
+                game.setScrGameover(nScore, ncoinCounter);
+               // game.changeScreen(Screens.SCRGAMEOVER);
             }
         } else {
-            game.changeScreen(Screens.SCRGAMEOVER);
+            game.setScrGameover(nScore, ncoinCounter);
+            //game.changeScreen(Screens.SCRGAMEOVER);
         }
     }
 

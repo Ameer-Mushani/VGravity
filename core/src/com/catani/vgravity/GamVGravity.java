@@ -16,7 +16,6 @@ import com.catani.vgravity.screens.Screens;
 public class GamVGravity extends Game {
 	ScrMainMenu scrMainMenu;
 	ScrGame scrGame;
-	ScrGameover scrGameover;
 
 	public SpriteBatch batch;
 
@@ -27,6 +26,7 @@ public class GamVGravity extends Game {
 
 	public SprChar chrMain;
 
+	int highscore;
 
 	@Override
 	public void create() {
@@ -49,8 +49,8 @@ public class GamVGravity extends Game {
 
 		scrMainMenu = new ScrMainMenu(this);
 		scrGame = new ScrGame(this);
-		scrGameover = new ScrGameover(this);
 		changeScreen(Screens.SCRMAINMENU);
+		highscore = 0;
 	}
 
 	@Override
@@ -69,8 +69,11 @@ public class GamVGravity extends Game {
 				break;
 			case SCRMAINMENU:	setScreen(scrMainMenu);
 				break;
-			case SCRGAMEOVER:	setScreen(scrGameover);
 		}
+	}
+	public void setScrGameover(int score,int coins){
+		highscore = score>highscore ? score : highscore;
+		setScreen(new ScrGameover(this, score, coins, highscore));
 	}
 	public void drawImage(String img, float fX, float fY){
 		batch.draw(assets.manager.get(img, Texture.class), fX, fY);
@@ -80,6 +83,8 @@ public class GamVGravity extends Game {
 			case SCORE:	assets.manager.get("score.ttf", BitmapFont.class).draw(batch, text,fX,fY);
 				break;
 			case GAMEOVER: assets.manager.get("gameover.ttf", BitmapFont.class).draw(batch, text,fX,fY);
+				break;
+			case GAMEOVERSMALL: assets.manager.get("gameoversmall.ttf", BitmapFont.class).draw(batch, text,fX,fY);
 		}
 	}
 }
