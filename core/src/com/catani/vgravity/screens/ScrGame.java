@@ -67,7 +67,7 @@ public class ScrGame implements Screen, InputProcessor {
         musElectro.setLooping(true);
         nScore = 0;
         nObsAvoided = 0;
-        fGameSpeed = 10;
+        fGameSpeed = 12;
     }
 
 

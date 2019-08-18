@@ -45,17 +45,21 @@ public class ScrMainMenu implements Screen, InputProcessor {
         game.batch.begin();
         game.batch.setProjectionMatrix(game.camera.combined);
 
-        game.drawImage("background1.png", 0, 0);
-        game.drawImage("Hero.png", 500, Constants.FLOOR);
-        game.batch.draw(txLogo, 1920/2 -txLogo.getWidth(), 540, 1000,600);
+        game.sbg.staticImage(game.batch);
 
-        animator.drawAni(game.batch, 700, 600);
+        if (game.chrMain.getX() < 500) {
+            game.chrMain.menuAnimation(game.batch);
+        } else {
+            game.drawImage("Hero.png", 500, Constants.FLOOR);
+            game.drawImage("logo.png", 1920 / 2, 540, 1000, 600);
+            animator.drawAni(game.batch, 700, 600);
+
+            if (Gdx.input.justTouched() && !touchDown) {
+                game.changeScreen(Screens.SCRGAME);
+            }
+        }
 
         game.batch.end();
-
-        if (Gdx.input.justTouched() && !touchDown) {
-            game.changeScreen(Screens.SCRGAME);
-        }
     }
 
     @Override

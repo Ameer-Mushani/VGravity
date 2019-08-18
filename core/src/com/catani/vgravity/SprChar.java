@@ -54,7 +54,12 @@ public class SprChar extends Sprite {
         }
 
     }
-
+    public void menuAnimation(SpriteBatch batch) {
+        ElapsedTime += Gdx.graphics.getDeltaTime();
+        setX(getX() + 10);
+        setY(Constants.FLOOR);
+        batch.draw((TextureRegion) AnmCreateAnimation[0].getKeyFrame(ElapsedTime, true), getX(), getY()); //normal
+    }
     public void reset() {
         setPosition(500, Constants.FLOOR );
         vVel.set(0, 20);

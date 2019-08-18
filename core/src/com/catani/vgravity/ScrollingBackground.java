@@ -30,7 +30,10 @@ public class ScrollingBackground {
         scroll();
         // Change();
     }
-
+    public void staticImage(SpriteBatch batch){
+        batch.draw(txtBackgrounds[nImage], fX, fY, Constants.WORLDWIDTH, Constants.WORLDHEIGHT);
+        batch.draw(txtBackgrounds[nImage], fX2, fY, Constants.WORLDWIDTH, Constants.WORLDHEIGHT);
+    }
     private void scroll() {
         //System.out.println("X1 = "+ fX + " X2 = " + fX2);
         fX -= fScrollSpeed;

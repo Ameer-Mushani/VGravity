@@ -26,6 +26,7 @@ public class GamVGravity extends Game {
 
 	public SprChar chrMain;
 
+	public ScrollingBackground sbg;
 	int highscore;
 
 	@Override
@@ -45,6 +46,7 @@ public class GamVGravity extends Game {
 
 		batch = new SpriteBatch();
 
+		sbg = new ScrollingBackground();
 		chrMain = new SprChar();
 
 		scrMainMenu = new ScrMainMenu(this);
@@ -57,10 +59,6 @@ public class GamVGravity extends Game {
 	public void render() {
 		super.render();
 	}
-
-//	public void updateAssets(Assets assets){
-//		scrMainMenu = new ScrMainMenu(this, assets);
-//	}
 
 
 	public void changeScreen(Screens screen){
@@ -78,6 +76,10 @@ public class GamVGravity extends Game {
 	public void drawImage(String img, float fX, float fY){
 		batch.draw(assets.manager.get(img, Texture.class), fX, fY);
 	}
+	public void drawImage(String img, float fX, float fY, float fW, float fH) {
+		batch.draw(assets.manager.get(img, Texture.class), fX, fY, fW, fH);
+	}
+
 	public void drawText(Assets.Fonts font, String text, float fX, float fY){
 		switch(font){
 			case SCORE:	assets.manager.get("score.ttf", BitmapFont.class).draw(batch, text,fX,fY);
