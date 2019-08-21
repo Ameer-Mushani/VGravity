@@ -30,6 +30,7 @@ public class Assets {
         manager.load("shopbutton.png", Texture.class);
         manager.load("background1.png", Texture.class);
         manager.load("logo.png", Texture.class);
+        manager.load("logo2.png", Texture.class);
         manager.load("Mario.png", Texture.class);
         manager.load("Hero.png", Texture.class);
         manager.load("floorhole.png", Texture.class);

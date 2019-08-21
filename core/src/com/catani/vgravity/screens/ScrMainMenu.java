@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
 import com.catani.vgravity.Animator;
@@ -18,14 +19,18 @@ public class ScrMainMenu implements Screen, InputProcessor {
     GamVGravity game;
     TextureAtlas textureAtlas;
     Animator animator;
-
+    Sprite sprLogo; //logo must be a sprite not texture to modify opacity
+    float alphaCount; //alpha value for sprite to be incremented
     boolean touchDown;
 
     Texture txLogo;
     public ScrMainMenu(GamVGravity _game) {
         this.game = _game;
         animator = new Animator(game.assets);
-        txLogo = game.assets.manager.get("logo.png", Texture.class);
+        sprLogo = new Sprite(new Texture("logo2.png"));
+        sprLogo.setPosition(Constants.WORLDWIDTH/2-500, Constants.WORLDHEIGHT/2);
+        sprLogo.setSize(1000,400);
+        alphaCount = 0;
     }
 
     @Override
@@ -51,8 +56,11 @@ public class ScrMainMenu implements Screen, InputProcessor {
             game.chrMain.menuAnimation(game.batch);
         } else {
             game.drawImage("Hero.png", 500, Constants.FLOOR);
-            game.drawImage("logo.png", 1920 / 2, 540, 1000, 600);
-            animator.drawAni(game.batch, 700, 600);
+            if(alphaCount < 1)
+                alphaCount += 0.025;
+            sprLogo.setAlpha(alphaCount);
+            sprLogo.draw(game.batch);
+            animator.drawAni(game.batch, 700, Constants.FLOOR);
 
             if (Gdx.input.justTouched() && !touchDown) {
                 game.changeScreen(Screens.SCRGAME);
