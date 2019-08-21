@@ -124,8 +124,6 @@ public class ScrGame implements Screen, InputProcessor {
                     deathAnimations(obstacle);
                 }
 
-                System.out.println(obstacle);
-
             }
         }
         sprCoin.render(game.batch);

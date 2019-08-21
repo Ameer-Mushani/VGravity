@@ -38,7 +38,7 @@ public class ScrGameover implements Screen {
 		game.drawText(Assets.Fonts.GAMEOVER, "Game over", Constants.WORLDWIDTH/2- 500, Constants.CEILING/2+450);
 		game.drawText(Assets.Fonts.GAMEOVERSMALL,"Score "+ score, Constants.WORLDWIDTH/2- 500, Constants.CEILING/2 +120);
 		game.drawText(Assets.Fonts.GAMEOVERSMALL,"Coins "+ coins, Constants.WORLDWIDTH/2- 500, Constants.CEILING/2);
-		game.drawText(Assets.Fonts.GAMEOVERSMALL,"Hi-Score "+ score, Constants.WORLDWIDTH/2- 500, Constants.CEILING/2 - 120);
+		game.drawText(Assets.Fonts.GAMEOVERSMALL,"Hi-Score "+ highscore, Constants.WORLDWIDTH/2- 500, Constants.CEILING/2 - 120);
 
 //        animator.AnmFadePlayBtn(batch, 630, 730);
 //        batch.draw(assets.manager.get("Mario.png", Texture.class), 500, 128, 75, 150);

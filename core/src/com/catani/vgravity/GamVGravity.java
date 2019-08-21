@@ -3,6 +3,7 @@ package com.catani.vgravity;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,6 +17,8 @@ import com.catani.vgravity.screens.Screens;
 public class GamVGravity extends Game {
 	ScrMainMenu scrMainMenu;
 	ScrGame scrGame;
+
+	Preferences preferences;
 
 	public SpriteBatch batch;
 
@@ -52,7 +55,9 @@ public class GamVGravity extends Game {
 		scrMainMenu = new ScrMainMenu(this);
 		scrGame = new ScrGame(this);
 		changeScreen(Screens.SCRMAINMENU);
-		highscore = 0;
+		preferences = Gdx.app.getPreferences("Data");
+		highscore = preferences.getInteger("highscore", 0);
+		System.out.println(highscore);
 	}
 
 	@Override
@@ -71,6 +76,9 @@ public class GamVGravity extends Game {
 	}
 	public void setScrGameover(int score,int coins){
 		highscore = score>highscore ? score : highscore;
+		System.out.println(highscore);
+		preferences.putInteger("highscore",highscore);
+		preferences.flush();
 		setScreen(new ScrGameover(this, score, coins, highscore));
 	}
 	public void drawImage(String img, float fX, float fY){
